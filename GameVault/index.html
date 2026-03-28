@@ -1,0 +1,212 @@
+<!doctype html> 
+<html lang="en">
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Game Vault</title>
+  <link rel="stylesheet" href="./css/styles.css">
+  <script defer src="./js/script.js"></script>
+</head>
+
+  <body>
+    <header class="topbar">
+      <div class="brand">Game Vault</div>
+      <nav class="main-nav">
+        <a class="nav-link active" data-link="home">Home</a>
+        <a class="nav-link" data-link="games">Games</a>
+        <a class="nav-link" data-link="about">About</a>
+        <a class="nav-link" data-link="cart">Cart <!--tracking cart item count--> 
+          <span class="badge" id="cartCount">0</span>
+        </a>
+        <a class="nav-link" data-link="wishlist">Wishlist <!--tracking wishlist item count-->
+          <span class="badge" id="wishCount">0</span>
+        </a>
+        <a class="nav-link" data-link="checkout">Checkout</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="page-home" class="page">
+        <div class="hero">
+          <div class="hero-track" id="heroTrack"></div> <!--hero carousel images-->
+          <button class="hero-btn prev" id="heroPrev">‹</button> <!--left button-->
+          <button class="hero-btn next" id="heroNext">›</button> <!--right button-->
+        </div>
+
+        <section class="wrap">
+          <h2>Recommended Games</h2> <!--recommended games here-->
+          <div id="recommendedGrid" class="grid"></div> 
+        </section>
+      </section>
+
+      <section id="page-games" class="page hidden"> <!--hidden from user until they click the games page-->
+        <section class="wrap">
+          <h2>All Games</h2>
+          
+          <div class="controls"> <!-- filter options where each <label> groups a text label and a control-->
+            
+            <label>
+              Category:
+              <select id="catFilter"></select> <!--MOBA,FPS,etc...-->
+            </label>
+
+            <label>
+              Platform:
+              <select id="platFilter"></select>  <!--All/PC/Console-->
+            </label>
+
+            <label for="filterPrice">Price Range</label> 
+            <div class="slider-wrapper"> 
+              <div class="slider-top">
+                <span id="priceMin">$1</span>
+                <input type="range" id="filterPrice" min="1" max="80" step="1" value="80" />
+                <span id="priceMax">$80</span>
+              </div>
+              <span id="priceVal" class="slider-value">$80</span> <!--dynamic label that updates from script.js-->
+            </div>
+
+            <label>
+              Sort by
+              <select id="sortBy">
+                <option value="price-asc">Price ↑</option>
+                <option value="price-desc">Price ↓</option>
+                <option value="rating-desc">Rating</option>
+                <option value="name-asc">Name (A–Z)</option>
+              </select>
+            </label>
+
+            <label>
+              Search
+              <input type="text" id="searchText" placeholder="Search by title" />
+            </label>
+
+            <button class="btn" id="clearFilters">Clear All Filters</button> <!--filter reset-->
+
+            <div class="view-toggle"> <!--toggle buttons-->
+              <button class="btn small" id="viewGrid">Grid</button>
+              <button class="btn small" id="viewList">List</button>
+            </div>
+          </div>
+
+          <div id="gamesList"></div>
+        </section>
+      </section>
+
+      <section id="page-detail" class="page hidden">
+        <section class="wrap">
+          <button class="btn small outline" id="backToGames">← Back to Games</button>
+          <div id="detailContent"></div> <!--script will fill all details specific to the game-->
+        </section>
+      </section>
+
+      <section id="page-about" class="page hidden">
+        <section class="wrap narrow">
+          <h2>About</h2>
+          <p>
+            We created Game Vault to keep our fellow video game enjoyers connected and to experience the nostalgia of gaming in the past, but also be up-to-date on the hottest commodities of the present day. Games on this site are from vastly ranging release dates so you would have a wide selection of genres and styles to choose from! Feel free to contact us about any inquiries, thanks and enjoy!
+          </p>
+          <h3>Contact Us</h3>
+          <form id="contactForm">
+            <div class="field">
+              <label>Email:</label>
+              <input type="email" id="contactEmail">
+              <small id="contactEmailErr" class="error"></small> <!--front-end validation contact form-->
+            </div>
+            <div class="field">
+              <label>Message:</label>
+              <textarea id="contactMsg"></textarea>
+              <small id="contactMsgErr" class="error"></small>
+            </div>
+            <button class="btn" type="submit">Send</button>
+            <span id="contactStatus" class="status"></span>
+          </form>
+        </section>
+      </section>
+
+      <section id="page-cart" class="page hidden">
+        <section class="wrap">
+          <h2>Your Cart</h2>
+          <div id="cartItems"></div> <!--render each cart item-->
+          <div id="cartTotals" class="totals"></div>
+          <div class="row">
+            <button class="btn outline" id="emptyCart">Empty Cart</button>
+            <button class="btn" id="toCheckout">Go to Checkout</button>
+          </div>
+        </section>
+      </section>
+
+      <section id="page-wishlist" class="page hidden">
+        <section class="wrap">
+          <h2>Your Wishlist</h2>
+          <div id="wishItems"></div> <!--render each wishlist item-->
+        </section>
+      </section>
+
+      <section id="page-checkout" class="page hidden">
+        <section class="wrap narrow">
+          <h2>Checkout</h2> <!--regex checks for user info-->
+          <form id="payForm" novalidate>
+            <div class="field">
+              <label for="nameOnCard">Name on the card</label>
+              <input id="nameOnCard" required />
+              <small class="error" id="nameErr"></small>
+            </div>
+            <div class="field">
+              <label for="cardNumber">Card Number (16 digits)</label>
+              <input id="cardNumber" maxlength="19" placeholder="#### #### #### ####" required />
+              <small class="error" id="cardErr"></small>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="exp">Expiry Date (MM/YY)</label>
+                <input id="exp" placeholder="MM/YY" required />
+                <small class="error" id="expErr"></small>
+              </div>
+              <div class="field">
+                <label for="cvv">CVV (3 or 4 digits)</label>
+                <input id="cvv" maxlength="4" required />
+                <small class="error" id="cvvErr"></small>
+              </div>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" type="email" required />
+              <small class="error" id="emailErr"></small>
+            </div>
+            <button class="btn" id="payBtn" type="submit">Pay Now</button>
+            <span class="status" id="payStatus"></span>  <!--simulate action-->
+          </form>
+        </section>
+      </section>
+
+      <section id="page-receipt" class="page hidden">
+        <section class="wrap narrow">
+          <div class="receipt" id="receiptBox">
+            <h2>Order Summary</h2>
+            <div id="receiptMeta"></div> <!--order no., order date, user email-->
+            <div id="receiptItems"></div>  <!--list of games (quantity and price)-->
+            <div id="receiptTotals" class="totals"></div>  <!--subtotal, tax, total-->
+            <div class="row">
+              <button class="btn outline" id="printBtn">Print</button> <!--"Print" uses window.print() for functionality-->
+              <button class="btn" id="continueBtn">Continue Shopping</button> <!--goes back to home-->
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <h2>Newsletter</h2> <!--newsletter front-end validated on every page-->
+        <form id="newsForm" class="news">
+          <input type="email" id="newsEmail" placeholder="Email" required>
+          <textarea id="newsMsg" placeholder="Message" required></textarea>
+          <button type="submit" class="btn">Opt-In</button>
+          <span id="newsErr" class="error"></span>
+          <span id="newsStatus" class="status"></span>
+        </form>
+      </div>
+    </footer>
+  </body>
+</html>

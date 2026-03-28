@@ -1,0 +1,530 @@
+:root {
+  --bg: #0f172a;        /*page background*/
+  --surface: #111827;   /*card/background panels*/
+  --muted: #243145;     /*borders/dividers */
+  --text: #e5e7eb;      /*primary text colour*/
+  --sub: #9fb0c5;       /*secondary text colour */
+  --primary: #3b82f6;   /*buttons*/
+  --ok: #22c55e;        /*success message*/
+  --bad: #ef4444;       /*error message*/
+}
+
+* {
+  box-sizing: border-box; /*default layout*/
+}
+html,
+body {
+  margin: 0;                           
+  background: var(--bg);               
+  color: var(--text);                  
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.55;                  
+}
+
+a {
+  color: inherit;        
+  text-decoration: none;
+}
+
+.hidden {
+  display: none;         /*hide pages*/
+}
+
+.wrap {
+  max-width: 1100px;     
+  margin: 0 auto;        /*Centered*/
+  padding: 20px;        
+}
+
+.wrap.narrow {
+  max-width: 760px;      /*smaller for heavy info pages (About or Checkout page*/
+}
+
+/*image helpers*/
+img {
+  max-width: 100%;      
+  height: auto;
+  display: block;      
+}
+.media {
+  width: 100%;
+  height: 100%;
+  object-fit: var(--fit, cover); 
+  object-position: center;
+  background: #0b1220;  
+}
+
+.media.contain { --fit: contain; } /*fit whole image*/
+.media.cover  { --fit: cover;   }  /*crop image if too big*/
+
+.topbar {
+  position: sticky;           
+  top: 0;
+  z-index: 50;                /*stay at top*/
+  background: #0b1220;        
+  border-bottom: 1px solid var(--muted);
+  display: flex;              
+  gap: 20px;
+  align-items: center;        
+  justify-content: space-between; 
+  padding: 12px 16px;
+}
+
+.brand {
+  font-weight: 800;           
+  letter-spacing: 0.3px;      
+  font-size: 2rem;            
+  line-height: 1.2;          
+}
+
+.main-nav {
+  display: flex;              
+  gap: 14px;                 
+  flex-wrap: wrap;            
+}
+
+.nav-link {
+  padding: 8px 10px;          
+  border-radius: 10px;        
+  cursor: pointer;            
+}
+
+.nav-link.active {
+  background: var(--primary); 
+  color: #fff;
+}
+
+.badge {
+  background: var(--primary); 
+  color: #fff;
+  border-radius: 999px;      
+  padding: 2px 6px;
+  margin-left: 6px;           
+  font-size: 0.85rem;         /*small tracker*/
+}
+
+.page {
+  min-height: 64vh;           /*ensures page length*/
+}
+
+.hero {
+  position: relative;         
+  overflow: hidden;         
+  background: #0b1220;
+  border-bottom: 1px solid var(--muted);
+}
+
+.hero-track {
+  display: flex;              /*slide horizontally*/
+  transition: transform 0.3s ease; /*slide animation timed by script*/
+}
+
+.hero-card {
+  min-width: 100%;           
+  position: relative;
+  height: 320px;              
+  display: grid;
+  place-items: center;        
+  background: #0d1324;        
+}
+
+.hero-card img {
+  position: absolute;         
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;       
+  object-position: center;
+  background: #0b1220;        
+  opacity: 1;                 
+}
+
+.hero-card .cap {
+  position: relative;         
+  text-align: center;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 10px 14px;
+  border-radius: 12px;
+}
+
+.hero-btn { /*left and right buttons*/
+  position: absolute;         
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.16); 
+  border: 0;
+  color: #fff;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.hero-btn:hover {
+  background: rgba(255, 255, 255, 0.25); 
+}
+
+.hero-btn.prev { left: 8px; }  
+.hero-btn.next { right: 8px; } 
+
+.grid {
+  display: grid;                                   
+  gap: 14px;                                       
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+}
+
+.card {
+  background: var(--surface);      
+  border: 1px solid var(--muted);  
+  border-radius: 12px;             
+  overflow: hidden;                
+  display: flex;
+  flex-direction: column;         
+}
+
+.card .thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;            /*consistent 16:9 image box*/
+  overflow: hidden;
+  background: #0b1220;
+  border-bottom: 1px solid var(--muted);
+}
+
+.card .thumb img {
+  width: 100%;
+  height: 100%;
+}
+
+.card .pad {
+  padding: 10px;                   /*inner padding*/
+}
+
+.meta {
+  font-size: 0.9rem;               /*secondary text*/
+  color: var(--sub);
+}
+
+#gamesList.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 14px;
+}
+
+#gamesList.list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+#gamesList.list .card {
+  display: flex;
+  flex-direction: row;             /*thumbnail image on left, and text on right*/
+  align-items: center;
+  justify-content: flex-start;
+  background: var(--surface);
+  border: 1px solid var(--muted);
+  border-radius: 12px;
+  padding: 12px;
+  gap: 16px;
+}
+
+#gamesList.list .thumb {
+  flex: 0 0 180px;                
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#gamesList.list .thumb img {
+  width: 180px;
+  height: 110px;
+  object-fit: cover;               
+  border-radius: 8px;
+  border: 1px solid var(--muted);
+}
+
+#gamesList.list .pad {
+  flex: 1;                         
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#wishItems {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+#wishItems .card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  background: var(--surface);
+  border: 1px solid var(--muted);
+  border-radius: 12px;
+  padding: 12px;
+  gap: 16px;
+}
+
+#wishItems .thumb {
+  flex: 0 0 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#wishItems .thumb img {
+  width: 180px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--muted);
+}
+
+#wishItems .pad {
+  flex: 1;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#gamesList.list .card h3 {
+  margin: 0 0 6px;
+  font-size: 1.2rem;
+}
+
+#gamesList.list .card p {
+  margin: 4px 0;
+}
+
+#gamesList.list .card .btn {
+  margin-top: 8px;
+}
+
+.btn {
+  background: var(--primary); 
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.btn.small {
+  padding: 6px 9px;            
+  font-size: 0.9rem;
+}
+
+.btn.outline {
+  background: transparent;    
+  color: var(--text);
+  border: 1px solid var(--muted);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;             
+  gap: 10px;
+  align-items: center;
+  background: #0b1220;        
+  border: 1px solid var(--muted);
+  padding: 10px;
+  border-radius: 12px;
+  margin: 10px 0;
+}
+
+.controls label {
+  display: flex;
+  gap: 6px;
+  align-items: center;         
+}
+
+.controls input[type="text"],
+.controls select,
+.controls input[type="range"] {
+  background: #0a1220;
+  color: var(--text);
+  border: 1px solid var(--muted);
+  border-radius: 8px;
+  padding: 6px;
+}
+
+.slider-wrapper { /*price slider layout*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.slider-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 220px;               
+  gap: 10px;
+}
+
+.slider-top input[type="range"] {
+  flex: 1;                     
+}
+
+.slider-value {
+  text-align: center;
+  font-weight: 500;
+  color: var(--text);
+  margin-top: 4px;
+}
+
+.view-toggle {
+  margin-left: auto;           /*grid/list buttons on the right*/
+  display: flex;
+  gap: 6px;
+}
+
+.view-toggle .btn.active { /*shows user which view is currently active*/
+  outline: 2px solid var(--primary);
+}
+
+.detail {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr 1fr; 
+  margin-top: 12px;
+}
+
+.detail .mainimg {
+  width: 100%;
+  aspect-ratio: 16 / 9;        
+  object-fit: contain;         
+  border-radius: 10px;
+  border: 1px solid var(--muted);
+  background: #0b1220;       
+}
+
+.thumbrow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;             
+}
+
+.thumbrow img {
+  width: 140px;                
+  aspect-ratio: 16 / 9;
+  height: auto;
+  object-fit: contain;         
+  border-radius: 8px;
+  border: 1px solid var(--muted);
+  cursor: pointer;             
+  background: #0b1220;
+}
+
+.thumbrow img.active {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.specs {
+  font-size: 0.95rem;
+  color: var(--sub);          
+}
+
+.reviews {
+  margin-top: 10px;
+}
+
+.reviews blockquote {
+  background: #0b1220;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin: 6px 0;
+}
+
+.field {
+  margin-bottom: 10px;      
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--muted);
+  background: #0a1220;
+  color: var(--text);
+  font-family: inherit;        
+}
+
+.qty { width: 60px; } /*small input for the quantity*/
+
+.error {
+  color: var(--bad);
+  display: block;
+  min-height: 1.1em;           /*keep space for error so layout doesn't mess up*/
+}
+
+.status {
+  margin-left: 10px;
+  color: var(--ok);
+}
+
+.totals {
+  border-top: 1px dashed var(--muted);
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;            
+}
+
+.site-footer {
+  border-top: 1px solid var(--muted);
+  background: #0b1220;
+  margin-top: 20px;
+}
+
+.news {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr auto; 
+}
+
+@media (max-width: 900px) { 
+  .detail {
+    grid-template-columns: 1fr;  /*stack image gallery and info vertically on smaller screens*/
+  }
+}
+
+@media print {
+  header,
+  .site-footer,
+  .controls,
+  .btn,
+  .nav-link {
+    display: none !important; /*hides navigation and interactive controls when printing */
+  }
+
+  body {
+    background: #fff;          
+    color: #000;               
+  }
+
+  .receipt {
+    border: 1px solid #000;    
+    padding: 10px;
+  }
+}
