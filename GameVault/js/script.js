@@ -1,5 +1,3 @@
-//Jouhan Pathmanathan
-//Student Number: 218210567
 //Game Vault
 
 //I created an array of objects to store each game's properties so that I can access the properties more easily when I need them later on
