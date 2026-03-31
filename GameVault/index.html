@@ -13,8 +13,7 @@
       <div class="brand">
         <img
           src="https://plus.unsplash.com/premium_photo-1679826780079-406871af1703?q=80&w=627&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="Game Vault Logo"
-        />
+          alt="Game Vault Logo"/>
         <span><strong>Game Vault</strong></span>
       </div>
       <nav class="main-nav">
@@ -185,6 +184,32 @@
         </section>
       </section>
 
+  <section id="page-login" class="page- hidden">
+    <section class="wrap narrow">
+      <h2>Login</h2>
+
+      <form id="loginForm">
+
+        <div class="field">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" required />
+          <small class="error" id="loginPasswordError"></small>
+        </div>
+
+        <div class="field">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" required />
+          <small class="error" id="loginPasswordError"></small>
+        </div>
+
+        <button class="btn" type="submit">Login</button>
+        <span class="status" id="loginStatus"></span>
+        <!--simulate action-->
+
+      </form>
+    </section>
+  </section>
+    
       <section id="page-checkout" class="page hidden">
         <section class="wrap narrow">
           <h2>Checkout</h2>
