@@ -1,8 +1,12 @@
-//Jouhan Pathmanathan, Student Number: 218210567
-//Yoel Leghesse, Student Number: 219574797
-//Mohammad Sufi, 220637278
-//Umair Asif, 219062363
-//Abdulaziz Ali, 218974147
+Jouhan Pathmanathan, Student Number: 218210567
+
+Yoel Leghesse, Student Number: 219574797
+
+Mohammad Sufi, 220637278
+
+Umair Asif, 219062363
+
+Abdulaziz Ali, 218974147
 
 This is the link to the mid-level prototype:
 
