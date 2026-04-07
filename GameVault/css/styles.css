@@ -516,6 +516,16 @@ img {
   flex-wrap: wrap;
 }
 
+.checkout-row {
+  width: 100%;
+  flex-wrap: nowrap;
+}
+
+.checkout-row .checkout-field {
+  flex: 1;
+  min-width: 0;
+}
+
 .site-footer {
   border-top: 1px solid var(--muted);
   background: #0b1220;
